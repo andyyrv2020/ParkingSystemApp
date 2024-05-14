@@ -69,28 +69,20 @@ namespace ParkingSystemApp
 
         public ParkingSpot(int id, bool occupied, string type, double price)
         {
-            //TODO: implement me
+            Id = id;
+            Occupied = occupied;
+            Type = type;
+            Price = price;
+            parkingIntervals = new List<ParkingInterval>();
         }
 
-        public virtual bool ParkVehicle(string registrationPlate, int hoursParked, string type)
-        {
-            //TODO: implement me
-        }
-
-        public List<ParkingInterval> GetAllParkingIntervalsByRegistrationPlate(string registrationPlate)
-        {
-            //TODO: implement me
-        }
-
-        public virtual double CalculateTotal()
-        {
-            //TODO: implement me
-        }
-
+        public abstract bool ParkVehicle(string registrationPlate, int hoursParked);
+        public abstract void FreeParkingSpot();
+        public abstract List<ParkingInterval> GetAllParkingIntervalsByRegistrationPlate(string registrationPlate);
+        public abstract double CalculateTotal();
         public override string ToString()
         {
-            //TODO: implement me
+            return $"Parking Spot #{Id}\nOccupied: {Occupied}\nType: {Type}\nPrice per hour: {Price:F2} BGN";
         }
-
     }
 }

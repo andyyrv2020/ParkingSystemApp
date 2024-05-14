@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//https://pastebin.com/v0RMPsZv
+//
+
 namespace ParkingSystemApp
 {
     internal class SubscriptionParkingSpot : ParkingSpot
@@ -13,14 +16,16 @@ namespace ParkingSystemApp
         {
             get
             {
-                //TODO: implement me
-                throw new NotImplementedException();
+                return registrationPlate;
             }
 
             set
             {
-                //TODO: implement me
-                throw new NotImplementedException();
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("Registration plate can’t be null or empty!");
+                }
+                registrationPlate = value;
             }
         }
 

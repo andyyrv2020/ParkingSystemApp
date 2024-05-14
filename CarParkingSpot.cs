@@ -10,7 +10,30 @@ namespace ParkingSystemApp
     {
         public CarParkingSpot(int id, bool occupied, double price) : base(id, occupied, "car", price)
         {
-            //TODO: Implement me
         }
+        public override bool ParkVehicle(string registrationPlate, int hoursParked)
+        {
+            // Implementation specific to CarParkingSpot
+            throw new NotImplementedException();
+        }
+
+        public override void FreeParkingSpot()
+        {
+            // Implementation specific to CarParkingSpot
+            throw new NotImplementedException();
+        }
+
+        public override List<ParkingInterval> GetAllParkingIntervalsByRegistrationPlate(string registrationPlate)
+        {
+            // Implementation specific to CarParkingSpot
+            throw new NotImplementedException();
+        }
+
+        public override double CalculateTotal()
+        {
+            // Implementation specific to CarParkingSpot
+            throw new NotImplementedException();
+        }
+
     }
 }
