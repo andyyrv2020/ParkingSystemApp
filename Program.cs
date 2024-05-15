@@ -1,61 +1,36 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
 
-namespace ParkingSystemApp
+class Program
 {
-    public class Program
+    static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        ParkingController controller = new ParkingController();
+
+        while (true)
         {
-            ParkingController controller = new ParkingController();
-            StringBuilder stringBuilder = new StringBuilder();
-            bool isRunning = true;
-
-            while (isRunning)
+            string input = Console.ReadLine();
+            if (input == "End")
             {
-                List<string> lineArgs = Console.ReadLine()
-                   .Split(":")
-                   .ToList();
-
-                string command = lineArgs[0];
-
-                lineArgs = lineArgs
-                    .Skip(1)
-                    .ToList();
-                try
-                {
-                    switch (command)
-                    {
-                        case "CreateParkingSpot":
-                            stringBuilder.AppendLine(controller.CreateParkingSpot(lineArgs));
-                            break;
-                        case "ParkVehicle":
-                            stringBuilder.AppendLine(controller.ParkVehicle(lineArgs));
-                            break;
-                        case "FreeParkingSpot":
-                            stringBuilder.AppendLine(controller.FreeParkingSpot(lineArgs));
-                            break;
-                        case "GetParkingSpotById":
-                            stringBuilder.AppendLine(controller.GetParkingSpotById(lineArgs));
-                            break;
-                        case "GetParkingIntervalsByParkingSpotIdAndRegistrationPlate":
-                            stringBuilder.AppendLine(controller.GetParkingIntervalsByParkingSpotIdAndRegistrationPlate(lineArgs));
-                            break;
-                        case "CalculateTotal":
-                            stringBuilder.AppendLine(controller.CalculateTotal(lineArgs));
-                            break;
-                        case "End":
-                            isRunning = false;
-                            break;
-                    }
-                }
-                catch (ArgumentException ex)
-                {
-                    stringBuilder.AppendLine(ex.Message);
-                }
-
+                break;
             }
 
-            Console.WriteLine(stringBuilder.ToString().Trim());
+            var parts = input.Split(':');
+            var command = parts[0];
+            var commandArgs = new List<string>(parts[1..]);
+
+            string result = command switch
+            {
+                "CreateParkingSpot" => controller.CreateParkingSpot(commandArgs),
+                "ParkVehicle" => controller.ParkVehicle(commandArgs),
+                "FreeParkingSpot" => controller.FreeParkingSpot(commandArgs),
+                "GetParkingSpotById" => controller.GetParkingSpotById(commandArgs),
+                "GetParkingIntervalsByParkingSpotIdAndRegistrationPlate" => controller.GetParkingIntervalsByParkingSpotIdAndRegistrationPlate(commandArgs),
+                "CalculateTotal" => controller.CalculateTotal(),
+                _ => "Invalid command!"
+            };
+
+            Console.WriteLine(result);
         }
     }
 }

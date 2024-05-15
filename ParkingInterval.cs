@@ -1,77 +1,27 @@
-﻿namespace ParkingSystemApp
+﻿using System;
+
+public class ParkingInterval
 {
-    public class ParkingInterval
+    public ParkingSpot ParkingSpot { get; private set; }
+    public string RegistrationPlate { get; private set; }
+    public int HoursParked { get; private set; }
+    public double Revenue { get; private set; }
+
+    public ParkingInterval(ParkingSpot parkingSpot, string registrationPlate, int hoursParked)
     {
-        private ParkingSpot parkingSpot;
-
-        public ParkingSpot ParkingSpot
+        if (hoursParked <= 0)
         {
-            get
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
+            throw new ArgumentException("Hours parked must be greater than zero.");
         }
 
-        private string registrationPlate;
+        ParkingSpot = parkingSpot ?? throw new ArgumentNullException(nameof(parkingSpot));
+        RegistrationPlate = string.IsNullOrEmpty(registrationPlate) ? throw new ArgumentException("Registration plate must not be null or empty.") : registrationPlate;
+        HoursParked = hoursParked;
+        Revenue = parkingSpot.Price * hoursParked;
+    }
 
-        public string RegistrationPlate
-        {
-            get
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
-        }
-
-        private int hoursParked;
-
-        public int HoursParked
-        {
-            get
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                //TODO: implement me
-                throw new NotImplementedException();
-            }
-        }
-
-        public double Revenue
-        {
-            get
-            {
-                //TODO: Implement me
-                throw new NotImplementedException();
-            }
-        }
-
-        public ParkingInterval(ParkingSpot parkingSpot, string registrationPlate, int hoursParked)
-        {
-            //TODO: Implement me
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            //TODO: Implement me
-            throw new NotImplementedException();
-        }
+    public override string ToString()
+    {
+        return $"Parking Spot #{ParkingSpot.Id}\nRegistrationPlate: {RegistrationPlate}\nHoursParked: {HoursParked}\nRevenue: {Revenue} BGN";
     }
 }

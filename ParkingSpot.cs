@@ -1,88 +1,30 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
 
-namespace ParkingSystemApp
+public abstract class ParkingSpot
 {
-    public abstract class ParkingSpot
+    public int Id { get; private set; }
+    public bool Occupied { get; set; }
+    public string Type { get; private set; }
+    public double Price { get; private set; }
+    public List<ParkingInterval> ParkingIntervals { get; private set; }
+
+    protected ParkingSpot(int id, bool occupied, string type, double price)
     {
-        private int id;
-        private bool occupied;
-        private string type;
-        private double price;
-        protected List<ParkingInterval> parkingIntervals;
-
-        public int Id
+        if (price <= 0)
         {
-            get
-            {
-                return id;
-            }
-
-            set
-            {
-                id = value;
-            }
+            throw new ArgumentException("Price must be greater than zero.");
         }
 
-        public bool Occupied
-        {
-            get
-            {
-                return occupied;
-            }
+        Id = id;
+        Occupied = occupied;
+        Type = type;
+        Price = price;
+        ParkingIntervals = new List<ParkingInterval>();
+    }
 
-            set
-            {
-                occupied = value;
-            }
-        }
-
-        public string Type
-        {
-            get
-            {
-                return type;
-            }
-
-            set
-            {
-                type = value;
-            }
-
-        }
-
-        public double Price
-        {
-            get
-            {
-                return price;
-            }
-
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("Parking price cannot be less or equal to 0!");
-                }
-                price = value;
-            }
-        }
-
-        public ParkingSpot(int id, bool occupied, string type, double price)
-        {
-            Id = id;
-            Occupied = occupied;
-            Type = type;
-            Price = price;
-            parkingIntervals = new List<ParkingInterval>();
-        }
-
-        public abstract bool ParkVehicle(string registrationPlate, int hoursParked);
-        public abstract void FreeParkingSpot();
-        public abstract List<ParkingInterval> GetAllParkingIntervalsByRegistrationPlate(string registrationPlate);
-        public abstract double CalculateTotal();
-        public override string ToString()
-        {
-            return $"Parking Spot #{Id}\nOccupied: {Occupied}\nType: {Type}\nPrice per hour: {Price:F2} BGN";
-        }
+    public override string ToString()
+    {
+        return $"Parking Spot #{Id}\nOccupied: {Occupied}\nType: {Type}\nPrice per hour: {Price} BGN";
     }
 }
